@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<header class="mb-4">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container-fluid">
+<header class="mb-4 sticky-top">
+    <div class="container-fluid px-0 bg-dark">
+
+        <nav class="navbar navbar-expand-md navbar-dark px-5">
+
 
             <img src="${pageContext.request.contextPath}/images/logo.png">
 
@@ -10,37 +12,33 @@
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="posts">Home</a>
                     </li>
-
-                    <c:choose>
-                        <c:when test="${empty sessionScope.username}">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="login">Login</a>
-                            </li>
-                        </c:when>
-
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="add-post">Add post</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:if test="${not empty sessionScope.username}">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="add-post">Add post</a>
+                        </li>
+                    </c:if>
                 </ul>
+            </div>
 
-                <c:if test="${not empty sessionScope.username}">
+            <c:choose>
+                <c:when test="${empty sessionScope.username}">
+                    <a class="nav-link active text-white" aria-current="page" href="login">Login</a>
+                </c:when>
+                <c:otherwise>
                     <div class="text-white me-3">Welcome ${sessionScope.username} !</div>
-
                     <form class="d-flex m-0" action="${pageContext.request.contextPath}/user/logout" method="get">
                         <button class="btn btn-outline-danger" type="submit">Logout</button>
                     </form>
-                </c:if>
+                </c:otherwise>
+            </c:choose>
 
-            </div>
-        </div>
-    </nav>
+        </nav>
+
+    </div>
 </header>

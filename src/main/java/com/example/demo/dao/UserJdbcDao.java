@@ -11,12 +11,12 @@ import java.util.List;
 public class UserJdbcDao implements UserDao {
 
     @Override
-    public boolean create(User entity) {
+    public List<User> fetchAll() {
         throw new RuntimeException();
     }
 
     @Override
-    public List<User> findAll() {
+    public boolean insert(User entity) {
         throw new RuntimeException();
     }
 
@@ -38,7 +38,7 @@ public class UserJdbcDao implements UserDao {
     @Override
     public User findByUsername(String username) {
         Connection connection = ConnectionManager.getInstance();
-        String query = "SELECT id, username, password FROM users WHERE username=?";
+        String query = "SELECT id_user, username, password FROM user WHERE username=?";
         User userFound = null;
 
         try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -46,7 +46,7 @@ public class UserJdbcDao implements UserDao {
             ResultSet result = pst.executeQuery();
             if (result.next()) {
                 userFound = new User(
-                        result.getLong("id"),
+                        result.getLong("id_user"),
                         result.getString("username"),
                         result.getString("password")
                 );

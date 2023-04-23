@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface GenericDao<T, ID> {
 
-    boolean create(T entity);
+    boolean insert(T entity);
 
-    List<T> findAll();
+    List<T> fetchAll();
 
     T findById(ID id);
 

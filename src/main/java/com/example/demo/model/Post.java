@@ -12,6 +12,9 @@ public class Post {
     private LocalDateTime createdAt;
     private Category category;
 
+
+    public Post() {}
+
     public Post(Long id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
         this.id = id;
         this.title = title;
@@ -20,6 +23,14 @@ public class Post {
         this.pictureUrl = pictureUrl;
         this.createdAt = createdAt;
         this.category = category;
+    }
+
+    public Post(String title, String author, String content, String pictureUrl, LocalDateTime createdAt) {
+        this.title = title;
+        this.author = author;
+        this.content = content;
+        this.pictureUrl = pictureUrl;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {

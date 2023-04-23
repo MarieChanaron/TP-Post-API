@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<c:import url="header.jsp"></c:import>
+<c:import url="header.jsp" />
 
 <div class="container">
     <h1>Posts</h1>
@@ -21,10 +21,11 @@
                     <img src="${p.pictureUrl}" class="card-img-top" alt="${p.title}">
                     <div class="card-body">
                         <h5 class="card-title">${p.title}</h5>
-                        <p class="card-text">${p.content}</p>
-                        <fmt:parseDate value="${p.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="postDate" type="date"/>
-                        <p class="card-text"><fmt:formatDate pattern="dd MMMM yyyy hh:mm" value="${postDate}"/></p>
-                        <p class="card-text">${p.category.name}</p>
+                        <p class="card-text">By ${p.author}</p>
+                        <p class="card-text">
+                            <fmt:parseDate value="${p.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="postDate" type="date"/>
+                            <fmt:formatDate pattern="dd MMMM yyyy HH:mm" value="${postDate}"/>
+                        </p>
                     </div>
                 </div>
             </div>
