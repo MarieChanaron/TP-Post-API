@@ -26,6 +26,10 @@ public class PostService {
         return posts;
     }
 
+    public Post fetchPostById(int id) {
+        return postDao.findById(id);
+    }
+
     public Post createPost(String title, String author, String content) {
         Post p = new Post(title, author, content, ("https://picsum.photos/200/300?random=" + ++idSequence), LocalDateTime.now());
         postDao.insert(p);

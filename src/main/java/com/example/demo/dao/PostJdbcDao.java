@@ -25,13 +25,13 @@ public class PostJdbcDao implements PostDao {
 
             while (result.next()) {
                 Post p = new Post(
-                        result.getLong("id_post"),
+                        result.getInt("id_post"),
                         result.getString("title"),
                         result.getString("author"),
                         result.getString("content"),
                         result.getString("pictureURL"),
                         result.getTimestamp("createdAt").toLocalDateTime(),
-                        new Category( result.getLong("category_id"),result.getString("category_name"))
+                        new Category( result.getLong("category_id"), result.getString("category_name"))
                 );
                 postList.add(p);
             }
@@ -66,8 +66,33 @@ public class PostJdbcDao implements PostDao {
 
 
     @Override
-    public Post findById(Long aLong) {
-        return null;
+    public Post findById(int id) {
+        String query = "SELECT id_post, title, author, content, pictureURL, createdAt, category AS 'category_id', c.name AS 'category_name'\n" +
+                "FROM post\n" +
+                "INNER JOIN category c on post.category = c.id_category\n" +
+                "WHERE id_post = ?;";
+        Post postFound = new Post();
+
+        try {
+            PreparedStatement pst = connectionToPostDb.prepareStatement(query);
+            pst.setInt(1, id);
+            ResultSet result = pst.executeQuery();
+
+            if (result.next()) {
+                postFound = new Post(
+                        result.getInt("id_post"),
+                        result.getString("title"),
+                        result.getString("author"),
+                        result.getString("content"),
+                        result.getString("pictureURL"),
+                        result.getTimestamp("createdAt").toLocalDateTime(),
+                        new Category( result.getLong("category_id"),result.getString("category_name"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postFound;
     }
 
     @Override

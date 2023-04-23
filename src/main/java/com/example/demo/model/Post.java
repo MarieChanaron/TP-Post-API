@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Post {
 
-    private Long id;
+    private int id;
     private String title;
     private String author;
     private String content;
@@ -15,7 +15,7 @@ public class Post {
 
     public Post() {}
 
-    public Post(Long id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
+    public Post(int id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -33,7 +33,7 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -57,7 +57,7 @@ public class Post {
         return pictureUrl;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

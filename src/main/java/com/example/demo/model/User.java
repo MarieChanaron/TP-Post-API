@@ -2,19 +2,19 @@ package com.example.demo.model;
 
 public class User {
 
-    private Long id;
+    private int id;
 
     private String username;
 
     private String password;
 
-    public User(Long id, String username, String password) {
+    public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

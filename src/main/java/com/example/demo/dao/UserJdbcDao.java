@@ -21,7 +21,7 @@ public class UserJdbcDao implements UserDao {
     }
 
     @Override
-    public User findById(Long aLong) {
+    public User findById(int id) {
         throw new RuntimeException();
     }
 
@@ -46,7 +46,7 @@ public class UserJdbcDao implements UserDao {
             ResultSet result = pst.executeQuery();
             if (result.next()) {
                 userFound = new User(
-                        result.getLong("id_user"),
+                        result.getInt("id_user"),
                         result.getString("username"),
                         result.getString("password")
                 );

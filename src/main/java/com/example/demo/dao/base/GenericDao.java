@@ -8,7 +8,7 @@ public interface GenericDao<T, ID> {
 
     List<T> fetchAll();
 
-    T findById(ID id);
+    T findById(int id);
 
     void update(T entity);
 
