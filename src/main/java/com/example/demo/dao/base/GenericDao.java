@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface GenericDao<T, ID> {
 
-    boolean insert(T entity);
+    int insert(T entity);
 
     List<T> fetchAll();
 

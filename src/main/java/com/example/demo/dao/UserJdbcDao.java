@@ -16,7 +16,7 @@ public class UserJdbcDao implements UserDao {
     }
 
     @Override
-    public boolean insert(User entity) {
+    public int insert(User entity) {
         throw new RuntimeException();
     }
 

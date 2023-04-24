@@ -31,7 +31,7 @@ public class PostJdbcDao implements PostDao {
                         result.getString("content"),
                         result.getString("pictureURL"),
                         result.getTimestamp("createdAt").toLocalDateTime(),
-                        new Category( result.getLong("category_id"), result.getString("category_name"))
+                        new Category( result.getInt("category_id"), result.getString("category_name"))
                 );
                 postList.add(p);
             }
@@ -43,12 +43,13 @@ public class PostJdbcDao implements PostDao {
 
 
     @Override
-    public boolean insert(Post post) {
+    public int insert(Post post) {
         String title = post.getTitle();
         String author = post.getAuthor();
         String content = post.getContent();
         String pictureUrl = post.getPictureUrl();
         LocalDateTime dateTime = post.getCreatedAt();
+        int id = 0;
         try {
             String query = "INSERT INTO post (title, author, content, pictureUrl, createdAt) VALUES (?,?,?,?,?)";
             PreparedStatement myPreparedStatement = connectionToPostDb.prepareStatement(query);
@@ -58,10 +59,16 @@ public class PostJdbcDao implements PostDao {
             myPreparedStatement.setString(4, pictureUrl);
             myPreparedStatement.setTimestamp(5, java.sql.Timestamp.valueOf(dateTime));
             myPreparedStatement.executeUpdate();
+            String idQuery = "SELECT MAX(id_post) AS 'last_id' FROM post";
+            Statement statement = connectionToPostDb.createStatement();
+            ResultSet result = statement.executeQuery(idQuery);
+            if (result.next()) {
+                id = result.getInt("last_id");
+            }
         } catch (SQLException error) {
             error.printStackTrace();
         }
-        return true;
+        return id;
     }
 
 
@@ -86,7 +93,7 @@ public class PostJdbcDao implements PostDao {
                         result.getString("content"),
                         result.getString("pictureURL"),
                         result.getTimestamp("createdAt").toLocalDateTime(),
-                        new Category( result.getLong("category_id"),result.getString("category_name"))
+                        new Category( result.getInt("category_id"),result.getString("category_name"))
                 );
             }
         } catch (SQLException e) {
