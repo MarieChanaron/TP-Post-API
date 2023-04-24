@@ -103,12 +103,37 @@ public class PostJdbcDao implements PostDao {
     }
 
     @Override
-    public void update(Post entity) {
-
+    public boolean update(Post post) {
+        boolean success = false;
+        try {
+            String query = "UPDATE post " +
+                    "SET post.title = ?, post.author = ?, post.content = ?" +
+                    "WHERE post.id_post = ?;";
+            PreparedStatement pst = connectionToPostDb.prepareStatement(query);
+            pst.setString(1, post.getTitle());
+            pst.setString(2, post.getAuthor());
+            pst.setString(3, post.getContent());
+            pst.setInt(4, post.getId());
+            pst.executeUpdate();
+            success = true;
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return success;
     }
 
     @Override
-    public void delete(Post entity) {
-
+    public boolean delete(int id) {
+        String query = "DELETE FROM post WHERE id_post = ?;";
+        boolean success = false;
+        try {
+            PreparedStatement pst = connectionToPostDb.prepareStatement(query);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            success = true;
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return success;
     }
 }

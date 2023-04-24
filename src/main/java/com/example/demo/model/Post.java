@@ -15,14 +15,11 @@ public class Post {
 
     public Post() {}
 
-    public Post(int id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
+    public Post(int id, String title, String author, String content) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.content = content;
-        this.pictureUrl = pictureUrl;
-        this.createdAt = createdAt;
-        this.category = category;
     }
 
     public Post(String title, String author, String content, String pictureUrl, LocalDateTime createdAt) {
@@ -31,6 +28,16 @@ public class Post {
         this.content = content;
         this.pictureUrl = pictureUrl;
         this.createdAt = createdAt;
+    }
+
+    public Post(int id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.content = content;
+        this.pictureUrl = pictureUrl;
+        this.createdAt = createdAt;
+        this.category = category;
     }
 
     public int getId() {
@@ -87,5 +94,18 @@ public class Post {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", category=" + category +
+                '}';
     }
 }

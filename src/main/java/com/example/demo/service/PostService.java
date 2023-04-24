@@ -37,4 +37,14 @@ public class PostService {
         return p;
     }
 
+    public boolean deletePost(int id) {
+        return postDao.delete(id);
+    }
+
+    public boolean updatePost(int id, String title, String author, String content) {
+        Post post = new Post(id, title, author, content);
+        boolean success = postDao.update(post);
+        return success;
+    }
+
 }

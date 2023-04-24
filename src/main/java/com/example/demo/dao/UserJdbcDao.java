@@ -26,12 +26,12 @@ public class UserJdbcDao implements UserDao {
     }
 
     @Override
-    public void update(User entity) {
+    public boolean update(User entity) {
         throw new RuntimeException();
     }
 
     @Override
-    public void delete(User entity) {
+    public boolean delete(int id) {
         throw new RuntimeException();
     }
 
