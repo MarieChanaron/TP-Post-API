@@ -18,9 +18,15 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="posts">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="categories">Categories</a>
+                    </li>
                     <c:if test="${not empty sessionScope.username}">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="add-post">Add post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="add-category">Add category</a>
                         </li>
                     </c:if>
                 </ul>
