@@ -18,4 +18,11 @@ public class CategoryService {
     public List<Category> fetchAllCategories() {
         return categoryDao.fetchAll();
     }
+
+    @Override
+    public String toString() {
+        return "CategoryService{" +
+                "categoryDao=" + categoryDao +
+                '}';
+    }
 }

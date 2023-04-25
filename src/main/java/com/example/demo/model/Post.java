@@ -22,12 +22,13 @@ public class Post {
         this.content = content;
     }
 
-    public Post(String title, String author, String content, String pictureUrl, LocalDateTime createdAt) {
+    public Post(String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {
         this.title = title;
         this.author = author;
         this.content = content;
         this.pictureUrl = pictureUrl;
         this.createdAt = createdAt;
+        this.category = category;
     }
 
     public Post(int id, String title, String author, String content, String pictureUrl, LocalDateTime createdAt, Category category) {

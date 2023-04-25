@@ -49,15 +49,17 @@ public class PostJdbcDao implements PostDao {
         String content = post.getContent();
         String pictureUrl = post.getPictureUrl();
         LocalDateTime dateTime = post.getCreatedAt();
+        int categoryId = post.getCategory().getId();
         int id = 0;
         try {
-            String query = "INSERT INTO post (title, author, content, pictureUrl, createdAt) VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO post (title, author, content, pictureUrl, createdAt, category) VALUES (?,?,?,?,?,?)";
             PreparedStatement myPreparedStatement = connectionToPostDb.prepareStatement(query);
             myPreparedStatement.setString(1, title);
             myPreparedStatement.setString(2, author);
             myPreparedStatement.setString(3, content);
             myPreparedStatement.setString(4, pictureUrl);
             myPreparedStatement.setTimestamp(5, java.sql.Timestamp.valueOf(dateTime));
+            myPreparedStatement.setInt(6, categoryId);
             myPreparedStatement.executeUpdate();
             String idQuery = "SELECT MAX(id_post) AS 'last_id' FROM post";
             Statement statement = connectionToPostDb.createStatement();

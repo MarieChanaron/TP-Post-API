@@ -30,8 +30,18 @@ public class PostService {
         return postDao.findById(id);
     }
 
+    public Post createPost(String title, String author, String content, int catId) {
+        Category c = new Category(catId);
+        Post p = new Post(title, author, content, ("https://picsum.photos/200/300?random=" + ++idSequence), LocalDateTime.now(), c);
+        int idPost = postDao.insert(p);
+        p.setId(idPost);
+        return p;
+    }
+
+    // In case the category is not provided: set the category to default category (id 1 = default).
     public Post createPost(String title, String author, String content) {
-        Post p = new Post(title, author, content, ("https://picsum.photos/200/300?random=" + ++idSequence), LocalDateTime.now());
+        Category c = new Category(1); // default
+        Post p = new Post(title, author, content, ("https://picsum.photos/200/300?random=" + ++idSequence), LocalDateTime.now(), c);
         int idPost = postDao.insert(p);
         p.setId(idPost);
         return p;

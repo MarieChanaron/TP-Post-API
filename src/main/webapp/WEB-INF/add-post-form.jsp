@@ -23,10 +23,10 @@
         </div>
 
         <div class="input-group mb-3">
-            <select>
-                <option value="Catégorie 1"> Catégorie 1 </option>
-                <option value="Catégorie 2"> Catégorie 2 </option>
-                <option value="Catégorie 3"> Catégorie 3 </option>
+            <select name="category">
+                <c:forEach var="cat" items="${categories}">
+                    <option value="${cat.getId()}"> ${cat.getName()} </option>
+                </c:forEach>
             </select>
         </div>
 
