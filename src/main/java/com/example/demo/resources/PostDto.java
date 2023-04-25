@@ -6,6 +6,7 @@ public class PostDto {
     private String author;
     private String content;
 
+
     public PostDto() {
     }
 

@@ -56,7 +56,33 @@ public class CategoryJdbcDao implements CategoryDao {
         throw new RuntimeException();
     }
 
+    public boolean setDefaultCategory(int categoryId) {
+        boolean done = false;
+        String query = "UPDATE post " +
+                "SET category = 1 " +
+                "WHERE category = ?;";
+        try {
+            PreparedStatement pst = connection.prepareStatement(query);
+            pst.setInt(1, categoryId);
+            pst.executeUpdate();
+            done = true;
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return done;
+    }
+
     public boolean delete(int id) {
-        throw new RuntimeException();
+        String query = "DELETE FROM category WHERE id_category = ?;";
+        boolean done = false;
+        try {
+            PreparedStatement pst = connection.prepareStatement(query);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            done = true;
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return done;
     }
 }

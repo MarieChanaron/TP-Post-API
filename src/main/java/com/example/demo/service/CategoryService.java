@@ -15,6 +15,14 @@ public class CategoryService {
         return category;
     }
 
+    public boolean deleteCategory(int idCategory) {
+        boolean done = false;
+        if (categoryDao.setDefaultCategory(idCategory)) { // First change all the categories of these posts to default category
+            done = categoryDao.delete(idCategory);
+        }
+        return done;
+    }
+
     public List<Category> fetchAllCategories() {
         return categoryDao.fetchAll();
     }
