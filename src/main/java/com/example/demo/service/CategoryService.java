@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.CategoryJdbcDao;
 import com.example.demo.model.Category;
+import com.github.javafaker.Cat;
 
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class CategoryService {
             done = categoryDao.delete(idCategory);
         }
         return done;
+    }
+
+    public boolean updateCategory(Category category) {
+        return categoryDao.update(category);
     }
 
     public List<Category> fetchAllCategories() {

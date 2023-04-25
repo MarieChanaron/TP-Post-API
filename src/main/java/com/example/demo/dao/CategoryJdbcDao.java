@@ -52,8 +52,23 @@ public class CategoryJdbcDao implements CategoryDao {
         throw new RuntimeException();
     }
 
-    public boolean update(Category entity) {
-        throw new RuntimeException();
+    public boolean update(Category category) {
+        boolean updated = false;
+        String query = "UPDATE category " +
+                "SET name = ? " +
+                "WHERE category.id_category = ?;";
+        try {
+            PreparedStatement pst = connection.prepareStatement(query);
+            String name = category.getName();
+            int id = category.getId();
+            pst.setString(1, name);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+            updated = true;
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return updated;
     }
 
     public boolean setDefaultCategory(int categoryId) {
