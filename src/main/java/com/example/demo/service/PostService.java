@@ -57,4 +57,10 @@ public class PostService {
         return success;
     }
 
+    public List<Post> searchByKeywords(String keywords) {
+        String[] keywordsArray = keywords.split(" ");
+        List<Post> posts = postDao.fetchByKeywords(keywordsArray);
+        return posts;
+    }
+
 }

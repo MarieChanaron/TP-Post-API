@@ -41,6 +41,36 @@ public class PostJdbcDao implements PostDao {
         return postList;
     }
 
+    public List<Post> fetchByKeywords(String[] keywords) {
+        String query = "SELECT p.id_post, p.title, p.author, p.content, p.pictureURL, p.createdAt, c.id_category AS 'category_id', c.name AS 'category_name' " +
+            "FROM post p " +
+            "INNER JOIN category c ON p.category = c.id_category " +
+            "WHERE p.title LIKE CONCAT('%',?,'%');";
+        List<Post> postList = new ArrayList<>();
+
+        try {
+            PreparedStatement pst = connectionToPostDb.prepareStatement(query);
+            pst.setString(1, keywords[0]);
+            ResultSet result = pst.executeQuery(query);
+
+            while (result.next()) {
+                Post p = new Post(
+                        result.getInt("id_post"),
+                        result.getString("title"),
+                        result.getString("author"),
+                        result.getString("content"),
+                        result.getString("pictureURL"),
+                        result.getTimestamp("createdAt").toLocalDateTime(),
+                        new Category( result.getInt("category_id"), result.getString("category_name"))
+                );
+                postList.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postList;
+    }
+
 
     @Override
     public int insert(Post post) {
