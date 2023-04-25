@@ -1,12 +1,12 @@
 package com.example.demo.resources;
 
-public class UpdatePost {
+public class PostDto {
 
     private String title;
     private String author;
     private String content;
 
-    public UpdatePost() {
+    public PostDto() {
     }
 
     public String getTitle() {

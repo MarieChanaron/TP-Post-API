@@ -25,13 +25,13 @@ public class PostJdbcDao implements PostDao {
 
             while (result.next()) {
                 Post p = new Post(
-                        result.getInt("id_post"),
-                        result.getString("title"),
-                        result.getString("author"),
-                        result.getString("content"),
-                        result.getString("pictureURL"),
-                        result.getTimestamp("createdAt").toLocalDateTime(),
-                        new Category( result.getInt("category_id"), result.getString("category_name"))
+                    result.getInt("id_post"),
+                    result.getString("title"),
+                    result.getString("author"),
+                    result.getString("content"),
+                    result.getString("pictureURL"),
+                    result.getTimestamp("createdAt").toLocalDateTime(),
+                    new Category( result.getInt("category_id"), result.getString("category_name"))
                 );
                 postList.add(p);
             }
@@ -102,6 +102,7 @@ public class PostJdbcDao implements PostDao {
         return postFound;
     }
 
+
     @Override
     public boolean update(Post post) {
         boolean success = false;
@@ -121,6 +122,7 @@ public class PostJdbcDao implements PostDao {
         }
         return success;
     }
+
 
     @Override
     public boolean delete(int id) {

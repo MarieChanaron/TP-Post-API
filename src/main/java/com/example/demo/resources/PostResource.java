@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Path("/posts")
-public class BlogResource {
+public class PostResource {
 
     public final PostService postService = new PostService();
 
@@ -46,7 +46,7 @@ public class BlogResource {
     @POST
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response createPost(UpdatePost dto) {
+    public Response createPost(PostDto dto) {
 
         Post newPost = postService.createPost(dto.getTitle(), dto.getAuthor(), dto.getContent());
 
@@ -88,7 +88,7 @@ public class BlogResource {
     @PUT
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response amendPost(@PathParam("id") int postId, UpdatePost dto) {
+    public Response amendPost(@PathParam("id") int postId, PostDto dto) {
 
         Post postFound = postService.fetchPostById(postId);
 
@@ -97,7 +97,14 @@ public class BlogResource {
 
         // If post found : modify the post and send 200 OK
         // If post not found = create the post and send 201 CREATED
-        if (postFound.getId() != 0) {
+        if (postFound.getId() == 0) {
+            responseBody = postService.createPost(dto.getTitle(), dto.getAuthor(), dto.getContent());
+            if (responseBody.getId() != 0) {
+                status = Response.Status.CREATED;
+            } else {
+                status = Response.Status.BAD_REQUEST;
+            }
+        } else {
             boolean success = postService.updatePost(postId, dto.getTitle(), dto.getAuthor(), dto.getContent());
             if (success) {
                 status = Response.Status.OK;
@@ -105,13 +112,6 @@ public class BlogResource {
                 status = Response.Status.NOT_MODIFIED;
             }
             responseBody = postFound;
-        } else {
-            responseBody = postService.createPost(dto.getTitle(), dto.getAuthor(), dto.getContent());
-            if (responseBody.getId() != 0) {
-                status = Response.Status.CREATED;
-            } else {
-                status = Response.Status.BAD_REQUEST;
-            }
         }
 
         return Response

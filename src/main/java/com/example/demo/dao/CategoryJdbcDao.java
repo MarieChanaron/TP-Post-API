@@ -1,6 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.dao.CategoryDao;
 import com.example.demo.model.Category;
 
 import java.sql.*;
