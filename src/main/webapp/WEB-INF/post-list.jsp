@@ -16,9 +16,24 @@
 
 <c:import url="header.jsp" />
 
+<%-- Search bar --%>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+                <div class="container-fluid">
+                    <form class="d-flex ms-auto my-2" method="get" action="search">
+                        <input name="keywords" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <h1>Posts</h1>
-
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 align-content-center">
         <c:forEach var="p" items="${posts}">
             <div class="col">

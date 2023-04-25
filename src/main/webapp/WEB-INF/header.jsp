@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<header class="mb-4 sticky-top">
+<header class="sticky-top">
     <div class="container-fluid px-0 bg-dark">
 
         <nav class="navbar navbar-expand-md navbar-dark px-5">
