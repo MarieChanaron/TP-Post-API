@@ -10,6 +10,10 @@ import java.util.List;
 
 public class PostJdbcDao implements PostDao {
 
+    private static String toUnicode(char ch) {
+        return String.format("\\u%04x", (int) ch);
+    }
+
     private final Connection connectionToPostDb = ConnectionManager.getInstance();
 
 
@@ -45,13 +49,13 @@ public class PostJdbcDao implements PostDao {
         String query = "SELECT p.id_post, p.title, p.author, p.content, p.pictureURL, p.createdAt, c.id_category AS 'category_id', c.name AS 'category_name' " +
             "FROM post p " +
             "INNER JOIN category c ON p.category = c.id_category " +
-            "WHERE p.title LIKE CONCAT('%',?,'%');";
+            "WHERE p.title LIKE CONCAT('%',?,'%') ;";
         List<Post> postList = new ArrayList<>();
 
         try {
             PreparedStatement pst = connectionToPostDb.prepareStatement(query);
             pst.setString(1, keywords[0]);
-            ResultSet result = pst.executeQuery(query);
+            ResultSet result = pst.executeQuery();
 
             while (result.next()) {
                 Post p = new Post(
