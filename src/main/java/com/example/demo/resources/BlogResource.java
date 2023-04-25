@@ -5,9 +5,6 @@ import com.example.demo.service.PostService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import java.util.List;
 
 
@@ -49,15 +46,9 @@ public class BlogResource {
     @POST
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response createPost(String body) throws ParseException {
+    public Response createPost(UpdatePost dto) {
 
-        Object postObj = new JSONParser().parse(body);
-        JSONObject JsonPostObj = (JSONObject) postObj;
-        String title = (String) JsonPostObj.get("title");
-        String author = (String) JsonPostObj.get("author");
-        String content = (String) JsonPostObj.get("content");
-
-        Post newPost = postService.createPost(title, author, content);
+        Post newPost = postService.createPost(dto.getTitle(), dto.getAuthor(), dto.getContent());
 
         Response.Status status;
         if (newPost.getId() != 0) {
@@ -71,6 +62,7 @@ public class BlogResource {
                 .entity(newPost)
                 .build();
     }
+
 
     @Path("/{id}")
     @DELETE
@@ -96,20 +88,9 @@ public class BlogResource {
     @PUT
     @Produces(value = MediaType.APPLICATION_JSON)
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response amendPost(@PathParam("id") String id, String body) throws ParseException {
-
-        int postId = Integer.parseInt(id);
-        System.out.println(postId);
-
-        // Get values from the request body
-        Object postObj = new JSONParser().parse(body);
-        JSONObject JsonPostObj = (JSONObject) postObj;
-        String title = (String) JsonPostObj.get("title");
-        String author = (String) JsonPostObj.get("author");
-        String content = (String) JsonPostObj.get("content");
+    public Response amendPost(@PathParam("id") int postId, UpdatePost dto) {
 
         Post postFound = postService.fetchPostById(postId);
-        System.out.println(postFound);
 
         Response.Status status;
         Post responseBody;
@@ -117,16 +98,15 @@ public class BlogResource {
         // If post found : modify the post and send 200 OK
         // If post not found = create the post and send 201 CREATED
         if (postFound.getId() != 0) {
-            boolean success = postService.updatePost(postId, title, author, content);
+            boolean success = postService.updatePost(postId, dto.getTitle(), dto.getAuthor(), dto.getContent());
             if (success) {
                 status = Response.Status.OK;
-                responseBody = postFound;
             } else {
                 status = Response.Status.NOT_MODIFIED;
-                responseBody = postFound;
             }
+            responseBody = postFound;
         } else {
-            responseBody = postService.createPost(title, author, content);
+            responseBody = postService.createPost(dto.getTitle(), dto.getAuthor(), dto.getContent());
             if (responseBody.getId() != 0) {
                 status = Response.Status.CREATED;
             } else {
