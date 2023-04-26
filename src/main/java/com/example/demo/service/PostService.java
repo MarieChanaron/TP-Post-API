@@ -4,13 +4,10 @@ import com.example.demo.dao.PostDao;
 import com.example.demo.dao.PostJdbcDao;
 import com.example.demo.model.Category;
 import com.example.demo.model.Post;
-import com.github.javafaker.Faker;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
+
 
 // CRUD
 public class PostService {
